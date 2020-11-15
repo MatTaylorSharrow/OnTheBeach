@@ -37,6 +37,6 @@ int main()
 
     cout << "A topological ordering: ";
     for ( container::reverse_iterator ii=c.rbegin(); ii!=c.rend(); ++ii)
-      cout << index(*ii) << " ";
+      //cout << index(*ii) << " ";
     cout << endl;
 }
