@@ -9,6 +9,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 enable_testing()
 
 add_executable(TopologicalSortTestCase main.cpp)
+target_link_libraries(TopologicalSortTestCase PRIVATE OTBLibrary)
 add_test(NAME TopologicalSortTestCase COMMAND TopologicalSortTestCase)
 
 if (DEFINED ENV{BOOST_INCLUDE_DIR})
