@@ -74,4 +74,6 @@ print doSort("
 
 - So let's create a real project to solve the problem posed in the test along with some automated testing, and the conversions from adjacently list string representation to the list of edges.  If we are to unit test in C++, we'll have to move the core of the code into a library so it can be called from the test runner. So there will also need to be a simple shell program for running the sort, maybe we can make that into something useful like the unix tsort program.
 
+- I'm using QtCreator IDE, but as I'm already using Boost for the Graph library, I'll use Boost::Test to do the unit testing also, rather than QtTest.  Reduce the dependancies.
+
 
