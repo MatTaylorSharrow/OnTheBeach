@@ -9,10 +9,10 @@ using namespace boost;
 int main()
 {
     // define our concepts as real types to improve readability and stop our eyes from bleeding.
-    typedef std::pair<int,int>                                 Edge;       // Connection between two Vetices (or nodes)
-    typedef adjacency_list<vecS, vecS, directedS, no_property> Graph;      // the graph data structure based on adjacency_list
-    typedef boost::graph_traits<Graph>::vertex_descriptor      Vertex;     // aka a Node
-    typedef std::vector<Vertex>                                container;  // for the results
+    typedef std::pair<int,int>                                      Edge;       // Connection between two Vetices (or nodes)
+    typedef adjacency_list<vecS, vecS, directedS, color_property<>> Graph;      // the graph data structure based on adjacency_list
+    typedef boost::graph_traits<Graph>::vertex_descriptor           Vertex;     // aka a Node
+    typedef std::vector<Vertex>                                     container;  // for the results
 
     // Create an array of Edges to define the edges or arcs within the Graph
     Edge edges[6] = {
