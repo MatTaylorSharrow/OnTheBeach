@@ -39,4 +39,8 @@ print doSort("
   - Boost Graphy library sounds promising.
   - Bingo. Topological sort algorithm.
 
-- So lets see if we can get an example up and running.  
+- So lets see if we can get an example up and running. 
+- Found an example, created a c++ project, pasted it in. Building fails. Ok, lets get it working.
+- 12:40pm - Have got an example but problem with constructing the graph 
+- The manual says there are other ways to construct the graph object https://www.boost.org/doc/libs/1_74_0/libs/graph/doc/adjacency_list.html#sec:iterator-constructor
+- Nice, that works

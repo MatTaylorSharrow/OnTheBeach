@@ -25,7 +25,8 @@ int main()
     };
 
     // create the Graph
-    Graph g(6, edges, edges + 6);
+    //Graph g(6, edges, edges + 6);
+    Graph g(edges, edges + sizeof(edges) / sizeof(Edge), 6);
 
     // create a container for the results
     container c;
