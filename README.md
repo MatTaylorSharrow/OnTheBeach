@@ -44,3 +44,6 @@ print doSort("
 - 12:40pm - Have got an example but problem with constructing the graph 
 - The manual says there are other ways to construct the graph object https://www.boost.org/doc/libs/1_74_0/libs/graph/doc/adjacency_list.html#sec:iterator-constructor
 - Nice, that works
+- I've commented out the last error and the example builds and runs but no output as I've just commented out the bit that does the output! Back to the manual.
+- Ok other examples use an IndexMap and access a variable index as an array. Let's give it a try
+- Bingo. We have a working example.

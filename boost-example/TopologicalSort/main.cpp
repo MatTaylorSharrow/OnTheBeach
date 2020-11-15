@@ -13,6 +13,7 @@ int main()
     typedef adjacency_list<vecS, vecS, directedS, no_property> Graph;      // the graph data structure based on adjacency_list
     typedef boost::graph_traits<Graph>::vertex_descriptor      Vertex;     // aka a Node
     typedef std::vector<Vertex>                                container;  // for the results
+    typedef property_map<Graph, vertex_index_t>::type          IndexMap;   //
 
     // Create an array of Edges to define the edges or arcs within the Graph
     Edge edges[6] = {
@@ -36,7 +37,9 @@ int main()
     topological_sort(g, std::back_inserter(c));
 
     cout << "A topological ordering: ";
-    for ( container::reverse_iterator ii=c.rbegin(); ii!=c.rend(); ++ii)
-      //cout << index(*ii) << " ";
+    IndexMap index = get(vertex_index, g);
+    for ( container::reverse_iterator ii=c.rbegin(); ii!=c.rend(); ++ii) {
+      cout << index[*ii] << " ";
+    }
     cout << endl;
 }
