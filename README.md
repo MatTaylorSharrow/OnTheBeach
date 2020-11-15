@@ -47,3 +47,14 @@ print doSort("
 - I've commented out the last error and the example builds and runs but no output as I've just commented out the bit that does the output! Back to the manual.
 - Ok other examples use an IndexMap and access a variable index as an array. Let's give it a try
 - Bingo. We have a working example.
+- So, do the results give us the correct answer? Results are 2 5 0 1 4 3
+  - Let's draw the graph (see code for annotations)
+  - So the rusult "2 5 0 1 4 3" gives us "C F A B E D"
+  - A is before B and D. tick.
+  - B is after A but before E. tick
+  - C is before F and E. tick.
+  - D is after A and E. tick.
+  - E is after B and C but before D. tick.
+  - F is after C. tick
+- Ok looks like the example has been sorted successfully.
+- Now let's try one of the examples from the programming task.

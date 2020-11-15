@@ -15,18 +15,26 @@ int main()
     typedef std::vector<Vertex>                                container;  // for the results
     typedef property_map<Graph, vertex_index_t>::type          IndexMap;   //
 
+    enum vertices {A,B,C,D,E,F}; // serves no real purpose except to help highlight the example
+    //             0,1,2,3,4,5
+    //    A--→--\
+    //    ↓     |
+    //    B     |
+    //    ↓     |
+    //    E--→--D
+    //    ↑
+    //    C-→-F
     // Create an array of Edges to define the edges or arcs within the Graph
     Edge edges[6] = {
-        Edge(0,1),
-        Edge(2,4),
-        Edge(2,5),
-        Edge(0,3),
-        Edge(1,4),
-        Edge(4,3)
+        Edge(0,1), // A-B
+        Edge(2,4), // C-E
+        Edge(2,5), // C-F
+        Edge(0,3), // A-D
+        Edge(1,4), // B-E
+        Edge(4,3)  // E-D
     };
 
     // create the Graph
-    //Graph g(6, edges, edges + 6);
     Graph g(edges, edges + sizeof(edges) / sizeof(Edge), 6);
 
     // create a container for the results
