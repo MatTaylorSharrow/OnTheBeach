@@ -8,11 +8,13 @@ using namespace boost;
 
 int main()
 {
-    typedef std::pair<int,int> Edge;
-    typedef adjacency_list<vecS, vecS, directedS, color_property<>> Graph;
-    typedef boost::graph_traits<Graph>::vertex_descriptor Vertex;
-    typedef std::vector<Vertex> container;
+    // define our concepts as real types to improve readability and stop our eyes from bleeding.
+    typedef std::pair<int,int>                                      Edge;       // Connection between two Vetices (or nodes)
+    typedef adjacency_list<vecS, vecS, directedS, color_property<>> Graph;      // the graph data structure based on adjacency_list
+    typedef boost::graph_traits<Graph>::vertex_descriptor           Vertex;     // aka a Node
+    typedef std::vector<Vertex>                                     container;  // for the results
 
+    // Create an array of Edges to define the edges or arcs within the Graph
     Edge edges[6] = {
         Edge(0,1),
         Edge(2,4),
@@ -22,10 +24,15 @@ int main()
         Edge(4,3)
     };
 
-    Graph G(6, edges, edges + 6);
+    // create the Graph
+    Graph g(6, edges, edges + 6);
 
+    // create a container for the results
     container c;
-    topological_sort(G, std::back_inserter(c));
+
+    // Here's the science bit!!
+    // sort the Graph 'g'
+    topological_sort(g, std::back_inserter(c));
 
     cout << "A topological ordering: ";
     for ( container::reverse_iterator ii=c.rbegin(); ii!=c.rend(); ++ii)
