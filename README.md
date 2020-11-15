@@ -69,3 +69,9 @@ print doSort("
 - OK looks like this will work for us. We'll need to do some mapping from vertex to index and put it into a containing structure but it could work.
 
 - 13:34pm Time for brew.
+
+- 14:00pm Back to it then.  Got caught watching Monty Don looking at gardens in Cuba on the TV!
+
+- So let's create a real project to solve the problem posed in the test along with some automated testing, and the conversions from adjacently list string representation to the list of edges.  If we are to unit test in C++, we'll have to move the core of the code into a library so it can be called from the test runner. So there will also need to be a simple shell program for running the sort, maybe we can make that into something useful like the unix tsort program.
+
+
