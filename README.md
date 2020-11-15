@@ -57,4 +57,15 @@ print doSort("
   - E is after B and C but before D. tick.
   - F is after C. tick
 - Ok looks like the example has been sorted successfully.
-- Now let's try one of the examples from the programming task.
+- 13:10pm - Now let's try one of the examples from the programming task.
+ - We get the result:  4 3 1 2 5 0
+ - So the result "4 3 1 2 5 0" maps to vertices/nodes "E D B C F A".  Is this correct?
+ - A is after D. tick
+ - B is after E but before C. tick.
+ - C is after B but before F. tick
+ - D is before A. tick.
+ - E is before B. tick.
+ - F is after C. tick.
+- OK looks like this will work for us. We'll need to do some mapping from vertex to index and put it into a containing structure but it could work.
+
+- 13:34pm Time for brew.

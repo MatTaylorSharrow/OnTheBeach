@@ -25,6 +25,7 @@ int main()
     //    ↑
     //    C-→-F
     // Create an array of Edges to define the edges or arcs within the Graph
+    /*
     Edge edges[6] = {
         Edge(0,1), // A-B
         Edge(2,4), // C-E
@@ -32,6 +33,28 @@ int main()
         Edge(0,3), // A-D
         Edge(1,4), // B-E
         Edge(4,3)  // E-D
+    };
+    */
+
+
+    /*  On The Beach programming test example in adjacency list format
+a =>
+b => c
+c => f
+d => a
+e => b
+f =>
+        converted to directed graph. (The graph is disconnected, interesting!)
+    A
+    ↑
+    D    E->-B->-C->-F
+*/
+    // now we define our edges based on the indexes from the vertices enum above
+    Edge edges[4] = {
+        Edge(1,2), // B-C
+        Edge(2,5), // C-F
+        Edge(3,0), // D-A
+        Edge(4,1), // E-B
     };
 
     // create the Graph
