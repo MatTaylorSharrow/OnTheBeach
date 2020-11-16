@@ -91,4 +91,9 @@ Monday 16th November - 11:00am
 - So, let's define those tests.
   - Created a test for each example from the programming test sheet. These will serve as our user acceptance tests.
 
+- Now let's start to implement the functions and turn the red tests to green tests.
+  - Added the code for checking for empty strings and returned empty string.  First test passes.
+  - Removed dummy test for 'true'
+  - Added comments for algorithm to parse the adjaceny list structure and generate the pre-requisites for the sorting algorithm
+
 

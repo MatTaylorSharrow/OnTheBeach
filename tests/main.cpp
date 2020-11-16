@@ -4,10 +4,6 @@
 #include "../OTBLibrary/otblibrary.h"
 #include <string>
 
-BOOST_AUTO_TEST_CASE( TopologicalSortTestCase )
-{
-    BOOST_TEST( true /* test assertion */ );
-}
 
 BOOST_AUTO_TEST_CASE( TestEmtpyString )
 {
@@ -84,7 +80,7 @@ BOOST_AUTO_TEST_CASE( TestSelfReferencialError )
     try {
         auto joblist = OTBLibrary::sort_jobs(input);
     }
-    catch (std::logic_error e)
+    catch (std::logic_error &e)
     {
         BOOST_TEST( true );
         return;
@@ -107,7 +103,7 @@ BOOST_AUTO_TEST_CASE( TestCircularReferenceError )
     try {
         auto joblist = OTBLibrary::sort_jobs(input);
     }
-    catch (std::logic_error e)
+    catch (std::logic_error &e)
     {
         BOOST_TEST( true );
         return;
