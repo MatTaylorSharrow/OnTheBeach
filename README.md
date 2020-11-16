@@ -95,5 +95,5 @@ Monday 16th November - 11:00am
   - Added the code for checking for empty strings and returned empty string.  First test passes.
   - Removed dummy test for 'true'
   - Added comments for algorithm to parse the adjaceny list structure and generate the pre-requisites for the sorting algorithm
-
+  - Changed sort_jobs from static to member method. So I can call private members for parsing and then sorting.
 

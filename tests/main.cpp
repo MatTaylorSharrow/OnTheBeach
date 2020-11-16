@@ -7,12 +7,14 @@
 
 BOOST_AUTO_TEST_CASE( TestEmtpyString )
 {
-    BOOST_TEST( OTBLibrary::sort_jobs("") == "");
+    OTBLibrary otbl;
+    BOOST_TEST( otbl.sort_jobs("") == "");
 }
 
 BOOST_AUTO_TEST_CASE( TestSingleJob )
 {
-    BOOST_TEST( OTBLibrary::sort_jobs("a =>") == "a");
+    OTBLibrary otbl;
+    BOOST_TEST( otbl.sort_jobs("a =>") == "a");
 }
 
 BOOST_AUTO_TEST_CASE( TestNoDependancies )
@@ -22,7 +24,8 @@ BOOST_AUTO_TEST_CASE( TestNoDependancies )
 "b =>"
 "c =>";
 
-    auto joblist = OTBLibrary::sort_jobs(input);
+    OTBLibrary otbl;
+    auto joblist = otbl.sort_jobs(input);
 
     BOOST_TEST( joblist.find("a") != std::string::npos );
     BOOST_TEST( joblist.find("b") != std::string::npos );
@@ -36,7 +39,8 @@ BOOST_AUTO_TEST_CASE( TestSingleDependancy )
 "b => c"
 "c =>";
 
-    auto joblist = OTBLibrary::sort_jobs(input);
+    OTBLibrary otbl;
+    auto joblist = otbl.sort_jobs(input);
 
     BOOST_TEST( joblist.find("a") != std::string::npos );
     BOOST_TEST( joblist.find("b") != std::string::npos );
@@ -55,7 +59,8 @@ BOOST_AUTO_TEST_CASE( TestMultiDependancy )
 "e => b"
 "f =>";
 
-    auto joblist = OTBLibrary::sort_jobs(input);
+    OTBLibrary otbl;
+    auto joblist = otbl.sort_jobs(input);
 
     BOOST_TEST( joblist.find("a") != std::string::npos );
     BOOST_TEST( joblist.find("b") != std::string::npos );
@@ -77,8 +82,9 @@ BOOST_AUTO_TEST_CASE( TestSelfReferencialError )
 "b =>"
 "c => c";
 
+    OTBLibrary otbl;
     try {
-        auto joblist = OTBLibrary::sort_jobs(input);
+        auto joblist = otbl.sort_jobs(input);
     }
     catch (std::logic_error &e)
     {
@@ -100,8 +106,9 @@ BOOST_AUTO_TEST_CASE( TestCircularReferenceError )
 "e =>"
 "f => b";
 
+    OTBLibrary otbl;
     try {
-        auto joblist = OTBLibrary::sort_jobs(input);
+        auto joblist = otbl.sort_jobs(input);
     }
     catch (std::logic_error &e)
     {
