@@ -96,4 +96,13 @@ Monday 16th November - 11:00am
   - Removed dummy test for 'true'
   - Added comments for algorithm to parse the adjaceny list structure and generate the pre-requisites for the sorting algorithm
   - Changed sort_jobs from static to member method. So I can call private members for parsing and then sorting.
+  - Created signatures for private methods for parsing the adj list structure and for performing the sort
+  - copied prototype code from boost example to topological sort method, changing the the creation of the Edges array and replacing the hard coded 6 as the number of vertices.
+  - implemented the code for mapping the sort results back to symbols.
+  - moved psuedocode comments on how to parse input string to new private method.
+  - added dummy return value from string parsing method.
+  - commented out error tests as error handling not considered yet.
+  - still only 1 test passing.
+
+
 
