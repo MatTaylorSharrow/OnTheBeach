@@ -76,4 +76,19 @@ print doSort("
 
 - I'm using QtCreator IDE, but as I'm already using Boost for the Graph library, I'll use Boost::Test to do the unit testing also, rather than QtTest.  Reduce the dependancies.
 
+- Ok so let's start by defining a method signature and some tests for cases from the examples on the programming test sheet
+
+- Had a fight with QtCreator IDE and CMake. Had to create a master project for the unit tests to find the library code successfull and execute.
+
+- 17:00 - Stopped for food
+
+- 18:00 - Commited project structure changes
+
+- 19:00 Forced to spend time with the boss - Watched Les Miserables (TV), followed by Wolf Hall, Dinner, Bed
+ 
+
+Monday 16th November - 11:00am
+- So, let's define those tests.
+  - Created a test for each example from the programming test sheet. These will serve as our user acceptance tests.
+
 
