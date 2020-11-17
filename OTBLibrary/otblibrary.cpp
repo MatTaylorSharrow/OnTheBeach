@@ -8,8 +8,12 @@
 #include <boost/graph/adjacency_list.hpp>
 #include <boost/graph/topological_sort.hpp>
 
+#include <iostream>
+
+
 OTBLibrary::OTBLibrary()
 {
+
 }
 
 
@@ -29,10 +33,12 @@ std::string OTBLibrary::sort_jobs(const std::string &adj_list_rep)
     std::vector<int> sorted_indices = do_topological_sort(results.first, results.second);
 
     // map the output numeric indexes to vertex symbols
-    std::string result_string;
-    std::for_each(sorted_indices.begin(), sorted_indices.end(), [&results, &result_string](const int & index) {
-        result_string += results.first[index] + " ";
+    std::vector<std::string> sorted_symbols;
+    std::for_each(sorted_indices.begin(), sorted_indices.end(), [&results, &sorted_symbols](const int & index) {
+        sorted_symbols.push_back(results.first[index]);
     });
+    std::string result_string;
+    result_string = boost::algorithm::join(sorted_symbols, " ");
 
     // return the sorted list of vertices symbols as a string.
     return result_string;
@@ -45,17 +51,71 @@ OTBLibrary::parse_adjacency_list(
         const std::string & symbol_separator,
         const std::string & rule_separator)
 {
-    //    Split the string into lines by \n
-    //    Split the lines into symbols on =>,
-    //    trim the vertex symbols to remove whitespace
-    //    build list of vertex symbols - we'll need this for supplying the total number of vertices to the algorithm, and generating the return string
-    //    build list of Edges - mapping of vertex indices
-    //
+    typedef std::vector<std::pair<std::string,std::string>> EdgeListStr;
+    EdgeListStr els;
+    SymbolList lines, symbols;
 
-    SymbolList sl {"a", "b", "c"};
-    EdgeList el {std::make_pair(1,3), std::make_pair(0,2)};
+    // Split the string into lines by \n
+    boost::algorithm::split(lines, source, boost::algorithm::is_any_of(rule_separator));
 
-    return std::make_pair(sl, el);
+    // Split the lines into symbols on =>,
+    for (const auto & line : lines) {
+        SymbolList linesymbs, ls_tmp;
+        boost::algorithm::split(linesymbs, line, boost::algorithm::is_any_of(symbol_separator));
+
+        // trim the vertex symbols to remove whitespace and remove empty symbols
+        for (auto & symbol : linesymbs) {
+            boost::algorithm::trim(symbol);
+            if (symbol != "") {
+                ls_tmp.push_back(symbol);
+            }
+        }
+        linesymbs.swap(ls_tmp);
+
+        if (linesymbs.size() > 1) {
+            // we have a dependancy so define an edge
+            els.push_back(std::make_pair(linesymbs[0], linesymbs[1]));
+        }
+
+        std::sort(linesymbs.begin(), linesymbs.end());
+
+        std::for_each(linesymbs.begin(), linesymbs.end(), [&linesymbs](const std::string & symbol){
+            if (std::count(linesymbs.begin(), linesymbs.end(), symbol) > 1) {
+                throw std::logic_error("The job symbol '" + symbol + "' can not depend on itself, or a dependancy of itself.");
+
+                // This check ensures symbols are unique within a dependancy line, so we don't need to perform a unique before merging symbols
+            }
+        });
+
+        // build list of vertex symbols - we'll need this for supplying the total number of vertices to the algorithm, and generating the return string
+        std::vector<std::string> tmp;
+        std::set_union(symbols.begin(), symbols.end(), linesymbs.begin(), linesymbs.end(), std::back_inserter(tmp)); // merge
+        symbols.swap(tmp);
+
+        // sort prior to unique
+        std::sort(symbols.begin(), symbols.end());
+        // remove duplicate concurrent symbols
+        auto last = std::unique(symbols.begin(), symbols.end());
+        symbols.erase(last, symbols.end());
+    }
+
+    // create a mapping of symbol to index position
+    std::map<std::string, int> symbol_indices;
+    int i=0;
+    for (std::string &symbol : symbols) {
+        symbol_indices.emplace(symbol, i++);
+    }
+
+    // build list of Edges - mapping the symbol string to index
+    EdgeList el;
+    std::for_each(els.begin(), els.end(), [&symbol_indices, &el](const std::pair<std::string,std::string> & edge_symbols){
+        el.push_back(std::make_pair(
+            symbol_indices.find(edge_symbols.first)->second,
+            symbol_indices.find(edge_symbols.second)->second
+        ));
+    });
+
+    return std::make_pair(symbols, el);
 }
 
 
@@ -86,7 +146,7 @@ OTBLibrary::do_topological_sort(
 
     std::vector<int> result;
     IndexMap index = get(vertex_index, g);
-    for ( container::reverse_iterator ii=c.rbegin(); ii!=c.rend(); ++ii) {
+    for ( container::iterator ii=c.begin(); ii!=c.end(); ++ii) {
         result.push_back(index[*ii]);
     }
 

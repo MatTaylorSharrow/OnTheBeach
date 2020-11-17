@@ -10,6 +10,7 @@ enable_testing()
 
 add_executable(TopologicalSortTestCase main.cpp)
 target_link_libraries(TopologicalSortTestCase PRIVATE OTBLibrary)
+target_link_directories(TopologicalSortTestCase PRIVATE "../build/OTBLibrary/Debug/")
 add_test(NAME TopologicalSortTestCase COMMAND TopologicalSortTestCase)
 
 if (DEFINED ENV{BOOST_INCLUDE_DIR})

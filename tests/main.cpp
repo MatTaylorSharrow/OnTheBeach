@@ -19,14 +19,12 @@ BOOST_AUTO_TEST_CASE( TestSingleJob )
 
 BOOST_AUTO_TEST_CASE( TestNoDependancies )
 {
-    auto input =
-"a =>"
-"b =>"
-"c =>";
+    auto input = R"INPUT(a =>
+b =>
+c =>)INPUT";
 
     OTBLibrary otbl;
     auto joblist = otbl.sort_jobs(input);
-
     BOOST_TEST( joblist.find("a") != std::string::npos );
     BOOST_TEST( joblist.find("b") != std::string::npos );
     BOOST_TEST( joblist.find("c") != std::string::npos );
@@ -34,10 +32,9 @@ BOOST_AUTO_TEST_CASE( TestNoDependancies )
 
 BOOST_AUTO_TEST_CASE( TestSingleDependancy )
 {
-    auto input =
-"a =>"
-"b => c"
-"c =>";
+    auto input = R"INPUT(a =>
+b => c
+c =>)INPUT";
 
     OTBLibrary otbl;
     auto joblist = otbl.sort_jobs(input);
@@ -51,16 +48,17 @@ BOOST_AUTO_TEST_CASE( TestSingleDependancy )
 
 BOOST_AUTO_TEST_CASE( TestMultiDependancy )
 {
-    auto input =
-"a =>"
-"b => c"
-"c => f"
-"d => a"
-"e => b"
-"f =>";
+    auto input = R"INPUT(a =>
+b => c
+c => f
+d => a
+e => b
+f =>)INPUT";
 
     OTBLibrary otbl;
     auto joblist = otbl.sort_jobs(input);
+
+    //std::string joblist = "a d f c b e";
 
     BOOST_TEST( joblist.find("a") != std::string::npos );
     BOOST_TEST( joblist.find("b") != std::string::npos );
@@ -75,13 +73,13 @@ BOOST_AUTO_TEST_CASE( TestMultiDependancy )
     BOOST_TEST( joblist.find("a") < joblist.find("d") ); // a is before d
 }
 
-/*
+
 BOOST_AUTO_TEST_CASE( TestSelfReferencialError )
 {
-    auto input =
-"a =>"
-"b =>"
-"c => c";
+    auto input = R"INPUT(a =>
+b =>
+c => c)INPUT";
+
 
     OTBLibrary otbl;
     try {
@@ -96,16 +94,16 @@ BOOST_AUTO_TEST_CASE( TestSelfReferencialError )
     BOOST_TEST( false );
 
 }
+
 
 BOOST_AUTO_TEST_CASE( TestCircularReferenceError )
 {
-    auto input =
-"a =>"
-"b => c"
-"c => f"
-"d => a"
-"e =>"
-"f => b";
+    auto input = R"INPUT(a =>
+b => c
+c => f
+d => a
+e =>
+f => b)INPUT";
 
     OTBLibrary otbl;
     try {
@@ -119,4 +117,3 @@ BOOST_AUTO_TEST_CASE( TestCircularReferenceError )
 
     BOOST_TEST( false );
 }
-*/
