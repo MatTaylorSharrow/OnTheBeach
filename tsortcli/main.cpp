@@ -2,6 +2,8 @@
 
 #include "../OTBLibrary/otblibrary.h"
 #include <string>
+#include <boost/exception/all.hpp>
+#include <boost/graph/exception.hpp>
 
 using namespace std;
 
@@ -11,13 +13,21 @@ int main()
 b => c
 c => f
 d => a
-e => b
-f =>)INPUT";
+e =>
+f => b)INPUT";
 
     OTBLibrary otbl;
-    auto joblist = otbl.sort_jobs(input);
+    try {
+        auto joblist = otbl.sort_jobs(input);
+        std::cout << joblist << std::endl;
+    }
+    catch (boost::not_a_dag & e) {
+//        std::string const * fn = boost::get_error_info<boost::not_a_dag>(e);
+//        std::cout << "File name: " << *fn << "\n";
+    }
+    /*catch (std::logic_error & e) {
 
-    std::cout << joblist << std::endl;
+    }*/
 
     return 0;
 }

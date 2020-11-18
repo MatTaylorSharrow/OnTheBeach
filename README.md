@@ -104,5 +104,41 @@ Monday 16th November - 11:00am
   - commented out error tests as error handling not considered yet.
   - still only 1 test passing.
 
+Tuesday 17th November - 12:00
+- Continuing after numerous interuptions
+- Implemented the method to parse the adjacency list string
+- mapped output values to back to their symbol equivalents
+- tests failing due to thrown logic exception - due to bug in parser
+- tests failing due to input to tests not containing newlines - fixed by using the c++ multiline string format eg: R"TAG( string goes here  )TAG"
+- tests TestSingleDependancy and TestMultiDependancy failing due to results are being returned in reverse order - fixed by changing results vector to be populated by forward iterator not reverse iterator as from the boost example.
+- test TestSingleJob failing due to extra whitespace at end of output - fixed by using boost::algorithm::join()
 
+- 16:43 All tests pass now. TestCircularReferenceError passes but it shouldn't there must be a bug in there somewhere.  No circular reference checking has been implemented yet.
+- commiting to show progress.
 
+- So, this code 'works' but is just a first draft really.  There are still many issues :
+  - The parsing method is ugly and needs to work to pretty it up. #RefactorWithTests
+    - Some of the loops should be cut out to private methods
+    - There is possibly some unnescessary work happening within the main parsing loop
+    - The spec doesn't define a job 'label' in terms of length, so I've assumed they could be strings eg "payment => work_completed".
+    - The spec neither confirms or denys the possibility of the format having multiple levels eg : "payment => work_completed => parts_arrived => parts_ordered".  I initially was going to implement the parsing of this which is why the current method is a little ugly.  However, this may become useful for implementing the circular refernce checking.  Wheat we could do is link the depenancies together eg:
+
+```a => b
+b => c
+c
+
+could become
+
+a => b => c
+```
+
+  - Circular references are as yet unimplemented - boost graph could also possible help here.
+  - Error handling & exception safety requires a review
+  - As we've made the code a library, we should really sanitise and validate any data coming across the API boundary to ensure we operate on safe data.
+  - The current tests are really only user acceptance tests.  We should be able break some of the components apart and unit test them individually
+  - An then there is the biggie, the sorting is implemented using library code, perhaps On The Beach want to see it implemented by hand !!!!!!!!!!!!!!!!!!!!
+
+Wednesday 17th November - 14:00
+- On investigation, the circular reference test is passing because the boost graph library is throwing an exception when trying to perform a topological sort using a graph with a cycle. It is throwing the boost::not_a_dag exception.
+- I've updated the test so that it passes when catching the boost::not_a_dag exception.
+- 
