@@ -165,5 +165,39 @@ Thursday 18th November - 14:00
 
 - So let's update the cli runner to run each example and print the results or error messages.
 
-- So now do we tackle refactoring of the parser?
+- So now do we tackle refactoring of the parser or should I implement the topological_sort instead of using library code?
+- If I were to create a topological_sort algorithm, I would use a generic programming technique.  Boost libraries also use a generic programming technique to implement their libraries, so is there any point?  I mean I would just be recreating what already exists in the boost library, execpt it wouldn't be as robust or feature rich (eg colouring - adding properties to edges/vertices).
+- Let's implement it anyway just to show we know how to do it.
+- So from "Introduction to Algorithms 3rd Edition - Cormen et. al." Ch22.4 p.612, defines the topological sort as:
 
+```
+TOPOLOGICAL-SORT(G)
+1	call DFS(G) to compute finishing times v.f for each vertex v
+2	as each vertex is finished, insert it onto the front of a linked list
+3	return the linked list of vertices
+```
+
+- in turn the DFS (Depth First Search - ch22.3 p.604) Algorithm is defined as :
+
+```
+DFS(G)
+1	for each vertex u elementof G.V
+2		u.color = WHITE
+3		u.pi	= NIL
+4	time = 0
+5	for each vertex u elementof G.V
+6		if u.color == WHITE
+7			DFS-VISIT(G,u)
+
+DFS-VISIT(G,u)
+1	time = time + 1
+2	u.d = time
+3	u.color = GRAY
+4	for each v elementof G.Adj[u]
+5		if v.color == WHITE
+6			v.pi = u
+7			DFS-VISIT(G,v)
+8	u.color = BLACK
+9	time = time + 1
+10	u.f = time
+```
