@@ -117,13 +117,14 @@ Tuesday 17th November - 12:00
 - commiting to show progress.
 
 - So, this code 'works' but is just a first draft really.  There are still many issues :
-  - The parsing method is ugly and needs to work to pretty it up. #RefactorWithTests
+  - The parsing method is ugly and needs some work to pretty it up. #RefactorWithTests
     - Some of the loops should be cut out to private methods
     - There is possibly some unnescessary work happening within the main parsing loop
     - The spec doesn't define a job 'label' in terms of length, so I've assumed they could be strings eg "payment => work_completed".
-    - The spec neither confirms or denys the possibility of the format having multiple levels eg : "payment => work_completed => parts_arrived => parts_ordered".  I initially was going to implement the parsing of this which is why the current method is a little ugly.  However, this may become useful for implementing the circular refernce checking.  Wheat we could do is link the depenancies together eg:
+    - The spec neither confirms or denys the possibility of the format having multiple levels eg : "payment => work_completed => parts_arrived => parts_ordered".  I initially was going to implement the parsing of this which is why the current method is a little ugly.  However, this may become useful for implementing the circular refernce checking.  What we could do is link the depenancies together eg:
 
-```a => b
+```
+a => b
 b => c
 c
 
@@ -161,4 +162,8 @@ Thursday 18th November - 14:00
 - So let's not implement a OTBException, we'll just catch the boost::not_a_dag exception and throw a std::invalid_arguement exception instead. And we'll change the self reference check to throw a std::invalid_argument exception instead of std::logic_error.
 - OK let's go.   - (I think I over complicated in a prior step, but that's the trouble of picking up a project over multiple sessions).
 - Done. I've also updated the cli program to catch the correct exceptions and display an error.
+
+- So let's update the cli runner to run each example and print the results or error messages.
+
+- So now do we tackle refactoring of the parser?
 
