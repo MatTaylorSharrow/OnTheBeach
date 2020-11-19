@@ -3,8 +3,6 @@
 
 #include "../OTBLibrary/otblibrary.h"
 #include <string>
-#include <boost/exception/all.hpp>
-#include <boost/graph/exception.hpp>
 
 BOOST_AUTO_TEST_CASE( TestEmtpyString )
 {
@@ -86,7 +84,7 @@ c => c)INPUT";
     try {
         auto joblist = otbl.sort_jobs(input);
     }
-    catch (std::logic_error &e)
+    catch (std::invalid_argument &e)
     {
         BOOST_TEST( true );
         return;
@@ -109,12 +107,8 @@ f => b)INPUT";
     try {
         auto joblist = otbl.sort_jobs(input);
     }
-    catch (boost::not_a_dag & e) {
+    catch (std::invalid_argument & e) {
         BOOST_TEST( true );
-        return;
-    }
-    catch (std::logic_error & e) {
-        BOOST_TEST( false );
         return;
     }
 

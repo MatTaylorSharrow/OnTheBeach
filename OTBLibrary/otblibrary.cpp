@@ -8,8 +8,6 @@
 #include <boost/graph/adjacency_list.hpp>
 #include <boost/graph/topological_sort.hpp>
 
-#include <iostream>
-
 
 OTBLibrary::OTBLibrary()
 {
@@ -82,7 +80,6 @@ OTBLibrary::parse_adjacency_list(
         std::for_each(linesymbs.begin(), linesymbs.end(), [&linesymbs](const std::string & symbol){
             if (std::count(linesymbs.begin(), linesymbs.end(), symbol) > 1) {
                 throw std::logic_error("The job symbol '" + symbol + "' can not depend on itself, or a dependancy of itself.");
-
                 // This check ensures symbols are unique within a dependancy line, so we don't need to perform a unique before merging symbols
             }
         });

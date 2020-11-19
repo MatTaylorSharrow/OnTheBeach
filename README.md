@@ -25,10 +25,10 @@ print doSort("
 ```
 - So the input strings looks like an adjacenty list representation, which would imply we have some sort of graph data structure.
 - We have dependencies between the nodes of the graph so it's a directed graph.
-- The spec says there can't be circular dependancies so, or it's acyclic, so we're dealing with a directed acyclic graph or DAG.
+- The spec says there can't be circular dependencies so, or it's acyclic, so we're dealing with a directed acyclic graph or DAG.
 
 - Ok so we need to sort a DAG, hmmm ...
-- DuckDuckGO search "c++ sort with dependancies"
+- DuckDuckGO search "c++ sort with dependencies"
 - first result https://stackoverflow.com/questions/40721470/using-stdsort-to-sort-dependency-tre
   - a comment mentions topological sort with link to wiki page.
 - 12 Noon.  Bingo, it seems we need to implement a topological sort.
@@ -74,7 +74,7 @@ print doSort("
 
 - So let's create a real project to solve the problem posed in the test along with some automated testing, and the conversions from adjacently list string representation to the list of edges.  If we are to unit test in C++, we'll have to move the core of the code into a library so it can be called from the test runner. So there will also need to be a simple shell program for running the sort, maybe we can make that into something useful like the unix tsort program.
 
-- I'm using QtCreator IDE, but as I'm already using Boost for the Graph library, I'll use Boost::Test to do the unit testing also, rather than QtTest.  Reduce the dependancies.
+- I'm using QtCreator IDE, but as I'm already using Boost for the Graph library, I'll use Boost::Test to do the unit testing also, rather than QtTest.  Reduce the dependencies.
 
 - Ok so let's start by defining a method signature and some tests for cases from the examples on the programming test sheet
 
@@ -141,4 +141,11 @@ a => b => c
 Wednesday 17th November - 14:00
 - On investigation, the circular reference test is passing because the boost graph library is throwing an exception when trying to perform a topological sort using a graph with a cycle. It is throwing the boost::not_a_dag exception.
 - I've updated the test so that it passes when catching the boost::not_a_dag exception.
-- 
+- Now then, to detect the circular reference in the graph structure we need to perform a depth first search. 
+  - The boost graph manual has an example of performing the depth first search with a visitor to detect cyclic references 
+    - "Cyclic Dependencies" at the bottom of https://www.boost.org/doc/libs/1_74_0/libs/graph/doc/file_dependency_example.html
+  - However, the topological sort algorithm performs a depth first seach anyway, and throws the exception
+  - So is there any point doing the DFS (depth first search) prior to topological_sort just to catch throw the exception for cyclic dependencies?
+    - I don't think there is
+    - But we can perhaps catch and rethrow with extra information / nicer message.
+- So let's implement better exception handling for the OTBLibrary

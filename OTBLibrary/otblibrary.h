@@ -10,7 +10,6 @@
 typedef std::vector<std::string>        SymbolList;
 typedef std::vector<std::pair<int,int>> EdgeList;
 
-
 class OTBLIBRARY_EXPORT OTBLibrary
 {
 public:
