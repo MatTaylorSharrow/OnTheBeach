@@ -79,7 +79,7 @@ OTBLibrary::parse_adjacency_list(
 
         std::for_each(linesymbs.begin(), linesymbs.end(), [&linesymbs](const std::string & symbol){
             if (std::count(linesymbs.begin(), linesymbs.end(), symbol) > 1) {
-                throw std::logic_error("The job symbol '" + symbol + "' can not depend on itself, or a dependancy of itself.");
+                throw std::invalid_argument("Self reference detected. The job symbol '" + symbol + "' can not depend on itself");
                 // This check ensures symbols are unique within a dependancy line, so we don't need to perform a unique before merging symbols
             }
         });
@@ -139,7 +139,13 @@ OTBLibrary::do_topological_sort(
 
     Graph g(edges, edges + sizeof(edges) / sizeof(Edge), symbols.size() /* no. of vertices */);
     container c;
-    topological_sort(g, std::back_inserter(c));
+
+    try {
+        topological_sort(g, std::back_inserter(c));
+    }
+    catch (boost::not_a_dag & e) {
+        throw std::invalid_argument(e.what());
+    }
 
     std::vector<int> result;
     IndexMap index = get(vertex_index, g);

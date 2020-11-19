@@ -149,3 +149,16 @@ Wednesday 17th November - 14:00
     - I don't think there is
     - But we can perhaps catch and rethrow with extra information / nicer message.
 - So let's implement better exception handling for the OTBLibrary
+
+
+Thursday 18th November - 14:00
+- Define an exception signature for the OTBLibrary, the we can modify tests to use it then we can implement the throwing of the exception
+- After a little more investigation, The boost::not_a_dag exception is extended from std::invalid_argument which is extended from std::logic_error. If I were to create a 'OTBException' it too would probably extent std::logic_error. Now, in this case a string has been passed to a method to be processed and it fails because the input is not valid (due to self reference or circular reference). So should OTBException actually extend std::invalid_argument, or is there even any point in creating OTBException when std::invalid_arguement may suffice?   But that still means client code catching std::invalid_arguemnt or boost::not_a_dag.   
+- The client code shouldn't really be catching boost::not_a_dag as this is exposing the internal workings and libraries used to the client.  Also the detection of a circular reference could be made during the parsing stage possibly saving some cpu cycles.
+- Does the client need the ability to distinguish between a circular reference or self reference ???
+  - Or is just returning an exception of uniform type with an error message sufficient
+- The spec just says that an error message should suffice
+- So let's not implement a OTBException, we'll just catch the boost::not_a_dag exception and throw a std::invalid_arguement exception instead. And we'll change the self reference check to throw a std::invalid_argument exception instead of std::logic_error.
+- OK let's go.   - (I think I over complicated in a prior step, but that's the trouble of picking up a project over multiple sessions).
+- Done. I've also updated the cli program to catch the correct exceptions and display an error.
+

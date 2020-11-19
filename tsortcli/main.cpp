@@ -21,13 +21,9 @@ f => b)INPUT";
         auto joblist = otbl.sort_jobs(input);
         std::cout << joblist << std::endl;
     }
-    catch (boost::not_a_dag & e) {
-//        std::string const * fn = boost::get_error_info<boost::not_a_dag>(e);
-//        std::cout << "File name: " << *fn << "\n";
+    catch (std::invalid_argument & e) {
+        std::cerr << "Sorting Jobs failed. Because: " << e.what() << std::endl;
     }
-    /*catch (std::logic_error & e) {
-
-    }*/
 
     return 0;
 }
